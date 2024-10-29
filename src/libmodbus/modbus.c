@@ -32,7 +32,8 @@
 #include <config.h>
 #endif
 
-#if defined(ARDUINO) && defined(__AVR__)
+//#if defined(ARDUINO) && defined(__AVR__)
+#if defined(ARDUINO) && (defined(__AVR__) || (defined(ARDUINO_ARCH_RENESAS_UNO)))
 #undef EIO
 #define EIO 5
 
@@ -73,8 +74,8 @@ typedef enum {
     _STEP_DATA
 } _step_t;
 
-#if defined(ARDUINO) && defined(__AVR__)
-
+//#if defined(ARDUINO) && defined(__AVR__)
+#if defined(ARDUINO) && (defined(__AVR__) || (defined(ARDUINO_ARCH_RENESAS_UNO)))
 char *strerror(int errnum)
 {
     switch (errnum) {
@@ -859,7 +860,7 @@ int modbus_reply(modbus_t *ctx, const uint8_t *req,
         } else {
             int data = (req[offset + 3] << 8) + req[offset + 4];
 
-#if defined(ARDUINO) && defined(__AVR__)
+#if defined(ARDUINO) && (defined(__AVR__) || (defined(ARDUINO_ARCH_RENESAS_UNO)))
             if (data == (int)0xFF00 || data == 0x0) {
 #else
             if (data == 0xFF00 || data == 0x0) {
@@ -1246,6 +1247,7 @@ static int read_registers(modbus_t *ctx, int function, int addr, int nb,
    array */
 int modbus_read_registers(modbus_t *ctx, int addr, int nb, uint16_t *dest)
 {
+
     int status;
 
     if (ctx == NULL) {

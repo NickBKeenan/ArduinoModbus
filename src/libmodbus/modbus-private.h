@@ -10,7 +10,9 @@
 
 #ifndef _MSC_VER
 # include <stdint.h>
-#if defined(ARDUINO) && defined(__AVR__)
+// nick change
+//#if defined(ARDUINO) && defined(__AVR__)
+#if defined(ARDUINO)
 #define ssize_t unsigned long
 
 #define fd_set void*

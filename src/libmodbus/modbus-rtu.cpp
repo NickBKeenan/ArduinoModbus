@@ -37,7 +37,8 @@
 #include <linux/serial.h>
 #endif
 
-#if defined(ARDUINO) && defined(__AVR__)
+//#if defined(ARDUINO) && defined(__AVR__)
+#if defined(ARDUINO) && (defined(__AVR__) || (defined(ARDUINO_ARCH_RENESAS_UNO)))
 #include <avr/pgmspace.h>
 
 #undef EIO
@@ -60,7 +61,8 @@
 #endif
 
 /* Table of CRC values for high-order byte */
-#if defined(ARDUINO) && defined(__AVR__)
+//#if defined(ARDUINO) && defined(__AVR__)
+#if defined(ARDUINO) && (defined(__AVR__) || (defined(ARDUINO_ARCH_RENESAS_UNO)))
 static PROGMEM const uint8_t table_crc_hi[] = {
 #else
 static const uint8_t table_crc_hi[] = {
@@ -94,7 +96,8 @@ static const uint8_t table_crc_hi[] = {
 };
 
 /* Table of CRC values for low-order byte */
-#if defined(ARDUINO) && defined(__AVR__)
+//#if defined(ARDUINO) && defined(__AVR__)
+#if defined(ARDUINO) && (defined(__AVR__) || (defined(ARDUINO_ARCH_RENESAS_UNO)))
 #include <avr/pgmspace.h>
 static PROGMEM const uint8_t table_crc_lo[] = {
 #else
@@ -179,7 +182,8 @@ static uint16_t crc16(uint8_t *buffer, uint16_t buffer_length)
     /* pass through message buffer */
     while (buffer_length--) {
         i = crc_hi ^ *buffer++; /* calculate the CRC  */
-#if defined(ARDUINO) && defined(__AVR__)
+//#if defined(ARDUINO) && defined(__AVR__)
+#if defined(ARDUINO) && (defined(__AVR__) || (defined(ARDUINO_ARCH_RENESAS_UNO)))
         crc_hi = crc_lo ^ pgm_read_byte_near(table_crc_hi + i);
         crc_lo = pgm_read_byte_near(table_crc_lo + i);
 #else

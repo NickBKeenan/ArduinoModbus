@@ -163,7 +163,8 @@ float modbus_get_float_badc(const uint16_t *src)
     float f;
     uint32_t i;
 
-#if defined(ARDUINO) && defined(__AVR__)
+//#if defined(ARDUINO) && defined(__AVR__)
+#if defined(ARDUINO) && (defined(__AVR__) || (defined(ARDUINO_ARCH_RENESAS_UNO)))
     i = ntohl((uint32_t)((uint32_t)bswap_16(src[0]) << 16) + bswap_16(src[1]));
 #else
     i = ntohl((uint32_t)(bswap_16(src[0]) << 16) + bswap_16(src[1]));

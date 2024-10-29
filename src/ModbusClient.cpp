@@ -345,6 +345,7 @@ int ModbusClient::requestFrom(int id, int type, int address, int nb)
 
     case HOLDING_REGISTERS:
       result = modbus_read_registers(_mb, address, nb, (uint16_t*)_values);
+      Serial.println(result);
       break;
 
     case INPUT_REGISTERS:
